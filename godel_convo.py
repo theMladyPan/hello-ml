@@ -5,8 +5,8 @@ from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import random
 from colors import red, green, yellow, blue, magenta, cyan, white
 
-model_name = "microsoft/GODEL-v1_1-large-seq2seq"
 model_name = "microsoft/GODEL-v1_1-base-seq2seq"
+model_name = "microsoft/GODEL-v1_1-large-seq2seq"
 
 tokenizer = AutoTokenizer.from_pretrained(model_name, use_fast=True, model_max_length=1024)
 model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
@@ -20,12 +20,12 @@ def generate(instruction, knowledge, dialog):
     input_ids = tokenizer(f"{query}", return_tensors="pt").input_ids
     outputs = model.generate(
         input_ids, 
-        max_length=128, 
-        min_length=8, 
+        max_length=512, 
+        min_length=1, 
         top_p=.95, 
         do_sample=True, 
         temperature=1.1, 
-        num_return_sequences=random.choice([1, 1, 2, 3, 5]),
+        # num_return_sequences=random.choice([1, 1, 2, 3, 5]),
         early_stopping=True,
         no_repeat_ngram_size=3,
         # num_beams=9,

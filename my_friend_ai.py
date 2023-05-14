@@ -176,7 +176,7 @@ if __name__ == "__main__":
     text = ""
     while(True):
         try:
-            f.reply(text="")
+            f.reply(text=input("> "))
         except KeyboardInterrupt:
             f.save()
             break
