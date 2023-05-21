@@ -13,6 +13,17 @@
             "justMyCode": true,
             // run in the file folder
             "cwd": "${fileDirname}",
+        },
+        {
+            "name": "Python: Dalle Image creation",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true,
+            // run in the file folder
+            "cwd": "${fileDirname}",
+            "args": ["photorealistic image of a cat eating a mouse"]
         }
     ]
 }
