@@ -14,7 +14,7 @@ model = AutoModelForSeq2SeqLM.from_pretrained(model_name)
 
 def generate(instruction, knowledge, dialog):
     if knowledge != '':
-        knowledge = '[KNOWLEDGE] ' + knowledge
+        knowledge = f'[KNOWLEDGE] {knowledge}'
     dialog = ' EOS '.join(dialog)
     query = f"{instruction} [CONTEXT] {dialog} {knowledge}"
     input_ids = tokenizer(f"{query}", return_tensors="pt").input_ids
@@ -33,12 +33,11 @@ def generate(instruction, knowledge, dialog):
         repetition_penalty=3.0
     )
 
-    output = tokenizer.decode(outputs[0], skip_special_tokens=True)
-    return output
+    return tokenizer.decode(outputs[0], skip_special_tokens=True)
 
 
 # Instruction for a chitchat task
-instruction = f"Instruction: given a dialog context, continue in dialog between two friends. Generate possible responses and defent eachother's responses."
+instruction = "Instruction: given a dialog context, continue in dialog between two friends. Generate possible responses and defent eachother's responses."
 
 # Leave the knowledge empty
 knowledge = "This is conversation between two friends."
@@ -63,7 +62,7 @@ while True:
         response1 = generate(instruction, knowledge, dialog)
         print(red(response1))
         dialog.append(response1)
-        
+
         response2 = input("> ")
         dialog.append(response2)
     except KeyboardInterrupt:

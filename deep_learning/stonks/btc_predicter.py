@@ -20,7 +20,7 @@ batch_size = 8
 epochs = 1
 last_loss = 1
 desired_loss = 0.002
-    
+
 # Fetch tickers
 url = "https://api.coingecko.com/api/v3/coins/bitcoin/market_chart"
 days = "1000"
@@ -28,7 +28,7 @@ interval = "daily"
 filename = f"btc_{days}_days_{interval}_interval"
 # check if the file exists
 try:
-    with open(filename + ".json", "r") as f:
+    with open(f"{filename}.json", "r") as f:
         data = json.load(f)
 except FileNotFoundError:
     params = {
@@ -39,7 +39,7 @@ except FileNotFoundError:
     response = requests.get(url, params=params)
     data = response.json()
     # save the data
-    with open(filename + ".json", "w") as f:
+    with open(f"{filename}.json", "w") as f:
         json.dump(data, f)
 
 
@@ -93,9 +93,9 @@ for i in range(len(test_data) - window_size):
 X_test, y_test = np.array(X_test), np.array(y_test)
 
 try:
-    with open(filename + ".h5", "rb") as f:
-        model = tf.keras.models.load_model(filename + '.h5')
-        
+    with open(f"{filename}.h5", "rb") as f:
+        model = tf.keras.models.load_model(f'{filename}.h5')
+
 except FileNotFoundError:
     # Build the LSTM model
     model = Sequential()
@@ -114,9 +114,9 @@ except FileNotFoundError:
             batch_size = min(batch_size * 2, 4096)
             log.info(f"Batch size: {batch_size}")
 
-    model.save(filename + '.h5')
-    
-    
+    model.save(f'{filename}.h5')
+        
+
 # Predict the next value
 # Prepare test data
 # X_test = input_data[-window_size:].reshape(1, window_size, 2)
@@ -172,16 +172,16 @@ for i in range(0, len(y_test)-10):
         btc += amount
         eur -= 10
         log.info(f"day {ctr}, EUR: {eur} BTC: {btc:.5f}, BUY")
-        
+
     if y_pred[i+1] < y_test[i] * 0.99 and btc > 0.0001:
         log.debug("Sell")
         amount = 10 / y_test[i]
         # amount = btc / 4
         eur += amount * y_test[i]
         btc -= amount
-        
+
         log.info(f"day {ctr}, EUR: {eur} BTC: {btc:.5f}, SELL")
-    
+
     else:
         log.info(f"day {ctr}, EUR: {eur} BTC: {btc:.5f}, HOLD")
 

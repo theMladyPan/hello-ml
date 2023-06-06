@@ -120,12 +120,10 @@ class Friend:
     
     def think(self, text: str) -> str:
         self._log.debug(f"Thinking about {text}...")
-        if text: self.dialog.append(str(text))
-        
-        if self.knowledge != '':
-            knowledge = '[KNOWLEDGE] ' + self.knowledge
-        else:
-            knowledge = ""
+        if text:
+            self.dialog.append(text)
+
+        knowledge = f'[KNOWLEDGE] {self.knowledge}' if self.knowledge != '' else ""
         dialog = ' EOS '.join(self.dialog)
         query = f"{self.instruction} [CONTEXT] {dialog} {knowledge}"
         input_ids = self.tokenizer(f"{query}", return_tensors="pt").input_ids
@@ -147,7 +145,7 @@ class Friend:
         output = self.tokenizer.decode(outputs[0], skip_special_tokens=True)
         self._log.info(green(f"{output}"))
         self.dialog.append(output)
-        
+
         return output
     
     

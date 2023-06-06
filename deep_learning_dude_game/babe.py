@@ -129,7 +129,7 @@ class MyGame(arcade.Window):
 
         self.player_list.append(self.player)
 
-        for i in range(COIN_COUNT):
+        for _ in range(COIN_COUNT):
             coin = arcade.Sprite(":resources:images/items/gold_1.png",
                                  scale=0.5)
             coin.center_x = random.randrange(SCREEN_WIDTH)
@@ -173,9 +173,9 @@ class MyGame(arcade.Window):
         """
         Called when the user releases a key.
         """
-        if key == arcade.key.UP or key == arcade.key.DOWN:
+        if key in [arcade.key.UP, arcade.key.DOWN]:
             self.player.change_y = 0
-        elif key == arcade.key.LEFT or key == arcade.key.RIGHT:
+        elif key in [arcade.key.LEFT, arcade.key.RIGHT]:
             self.player.change_x = 0
 
     def on_update(self, delta_time):

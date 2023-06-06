@@ -22,13 +22,15 @@ except FileNotFoundError:
     # save the data
     with open(filename, "w") as f:
         json.dump(data, f)
-    
+
 
 # Extract timestamps and prices
-timestamps = [timestamp[0] / 1000 for timestamp in data['prices'][::-1][0:1000]]  # Convert milliseconds to seconds
-prices = [price[1] for price in data['prices'][::-1][0:1000]]
-market_cap = [market_cap[1] for market_cap in data['market_caps'][::-1][0:1000]]
-total_volume = [total_volume[1] for total_volume in data['total_volumes'][::-1][0:1000]]
+timestamps = [timestamp[0] / 1000 for timestamp in data['prices'][::-1][:1000]]
+prices = [price[1] for price in data['prices'][::-1][:1000]]
+market_cap = [market_cap[1] for market_cap in data['market_caps'][::-1][:1000]]
+total_volume = [
+    total_volume[1] for total_volume in data['total_volumes'][::-1][:1000]
+]
 
 # Plotting the tickers
 plt.plot(timestamps, prices)

@@ -22,7 +22,7 @@ else:
 
 log = logging.getLogger(__name__)
 log.info("Logger started")
-log.info("Arguments: " + str(args))
+log.info(f"Arguments: {str(args)}")
 
 # Define the input and output data
 input_data = np.array([[0, 0, 0],
@@ -57,7 +57,7 @@ else:
 
     # Train the model
     model.fit(input_data, output_data, epochs=args.epochs, verbose=args.verbose, )
-    
+
     log.debug("Saving model")
     model.save('my_model.h5')
 

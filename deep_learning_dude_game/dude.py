@@ -85,7 +85,7 @@ class Game(arcade.Window):
             self.dude_move_right = -1
         elif key == arcade.key.RIGHT:
             self.dude_move_right = 1"""
-        if key == arcade.key.UP or key == arcade.key.SPACE:
+        if key in [arcade.key.UP, arcade.key.SPACE]:
             # self.dude_move_up = 1
             self.dude_speed_up = self._g / 2
         # elif key == arcade.key.DOWN:
